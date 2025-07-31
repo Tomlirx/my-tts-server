@@ -1,0 +1,19 @@
+{
+    "audio": {
+        "sample_rate": 22050
+    },
+    "espeak": {
+        "voice": "en-us"
+    },
+    "inference": {
+        "noise_scale": 0.667,
+        "length_scale": 1,
+        "noise_w": 0.8
+    },
+    "model": {
+        "type": "vits"
+    },
+    "phonemizer": {
+        "phoneme_type": "espeak"
+    }
+}
