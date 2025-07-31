@@ -2,3 +2,4 @@ flask
 piper-tts
 onnxruntime
 Flask-Cors
+gunicorn
