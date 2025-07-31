@@ -1,9 +1,13 @@
 import os
 from flask import Flask, request, send_file, jsonify
+from flask_cors import CORS # NEW: Import the CORS library
 from piper.voice import PiperVoice
 from pathlib import Path
 
 app = Flask(__name__)
+
+# NEW: Apply CORS to your app, allowing requests only from your website
+CORS(app, resources={r"/generate-speech": {"origins": "https://kids.antsclass.com"}})
 
 # --- Model Loading ---
 model_path = Path(__file__).parent / 'models' / 'en_US-ljspeech-medium.onnx'
@@ -19,7 +23,7 @@ except Exception as e:
 def generate_speech():
     if not voice:
         return jsonify({"error": "Server error: Voice model not loaded"}), 500
-
+    
     data = request.get_json()
     text_to_speak = data.get('text', '')
     if not text_to_speak:
@@ -37,7 +41,7 @@ def generate_speech():
         if output_path.exists():
             os.remove(output_path)
 
-# --- Health Check for Render ---
+# --- Health Check ---
 @app.route('/')
 def health_check():
     return "TTS Server is running.", 200
